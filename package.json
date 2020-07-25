@@ -1,6 +1,9 @@
 {
-  "name": "Paste",
+  "name": "Paste-Site",
   "version": "1.0.0",
+  "devDependencies": {
+    "husky": "^4.2.5"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -29,5 +32,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build"
+    }
   }
 }
