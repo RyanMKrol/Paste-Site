@@ -26,7 +26,7 @@ class InputPage extends Component {
     this.handleRadioChange = this.handleRadioChange.bind(this)
 
     this.state = {
-      PASTE_TTL_ID: 1
+      [PASTE_TTL_ID]: 1
     }
   }
 
