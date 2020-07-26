@@ -104,6 +104,7 @@ class App extends Component {
                   name={PASTE_TTL_ID}
                   value={1}
                   id="pasteTimeToLive1"
+                  defaultChecked
                 />
                 <Form.Check
                   type="radio"
