@@ -5,10 +5,12 @@ import Card from 'react-bootstrap/Card'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Form from 'react-bootstrap/Form'
-import Jumbotron from 'react-bootstrap/Jumbotron'
 
+import copy from 'copy-to-clipboard'
 import Cryptr from 'cryptr'
 import fetch from 'node-fetch'
+
+import { PasteJumbotron } from './../../Components'
 
 import './OutputPage.css'
 
@@ -24,6 +26,7 @@ class OutputPage extends Component {
 
     this.handleTextInputChange = this.handleTextInputChange.bind(this)
     this.handleDecrypt = this.handleDecrypt.bind(this)
+    this.copyToClipboard = this.copyToClipboard.bind(this)
   }
 
   componentDidMount() {
@@ -66,25 +69,37 @@ class OutputPage extends Component {
     })
   }
 
+  copyToClipboard() {
+    copy(this.state.content)
+  }
+
   render() {
     return (
       <div className="masterContainer">
-        <Jumbotron>
-          <h1>Save Your Pastes! - OUTPUT</h1>
+        <PasteJumbotron>
+          <h1>Save Your Pastes!</h1>
           <p>This is a basic site for saving text online to retrieve later.</p>
-        </Jumbotron>
-        <Container fluid="xl" className="output-page-container">
+        </PasteJumbotron>
+        <Container fluid="xl" className="outputPageContainer">
           <Col className="col">
             <Form.Group controlId={'decryptionKey'}>
               <Form.Label>Decryption Key</Form.Label>
               <Form.Control type="text" onChange={this.handleTextInputChange} />
             </Form.Group>
             <div className="buttonContainer">
-              <Button variant="primary" onClick={this.handleDecrypt}>
+              <Button
+                variant="primary"
+                className="outputPageButton"
+                onClick={this.handleDecrypt}
+              >
                 Decrypt
               </Button>
-              <Button variant="success" onClick={this.handleDecrypt}>
-                Decrypt
+              <Button
+                variant="success"
+                className="outputPageButton"
+                onClick={this.copyToClipboard}
+              >
+                Copy
               </Button>
             </div>
             <Card bg={'secondary'} text={'light'}>

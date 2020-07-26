@@ -1,4 +1,4 @@
-.output-page-container {
+.outputPageContainer {
   display: flex;
   align-items: center;
   height: 100%;
@@ -13,4 +13,8 @@
 .buttonContainer {
   text-align: center;
   margin: 10px;
+}
+
+.outputPageButton {
+  margin: 4px;
 }

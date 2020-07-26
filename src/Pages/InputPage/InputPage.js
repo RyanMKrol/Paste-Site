@@ -3,13 +3,13 @@ import React, { Component } from 'react'
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
-import Jumbotron from 'react-bootstrap/Jumbotron'
 import Form from 'react-bootstrap/Form'
 
 import Cryptr from 'cryptr'
 import fetch from 'node-fetch'
 import { v4 as uuidv4 } from 'uuid'
 
+import { PasteJumbotron } from './../../Components'
 import customSetState from './../../Utils'
 
 import './InputPage.css'
@@ -113,11 +113,11 @@ class InputPage extends Component {
   render() {
     return (
       <div>
-        <Jumbotron>
+        <PasteJumbotron>
           <h1>Save Your Pastes!</h1>
           <p>This is a basic site for saving text online to retrieve later.</p>
-        </Jumbotron>
-        <Container fluid className="input-page-container">
+        </PasteJumbotron>
+        <Container fluid className="inputPageContainer">
           <Col>
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId={PASTE_TITLE_ID}>
