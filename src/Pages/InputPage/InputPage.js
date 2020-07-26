@@ -31,7 +31,7 @@ class InputPage extends Component {
       [PASTE_TTL_ID]: 1,
       submitting: false,
       [PASTE_TITLE_ID]: undefined,
-      [PASTE_CONTENT_ID]: undefined,
+      [PASTE_CONTENT_ID]: '',
       [PASTE_ENCRYPTION_KEY_ID]: undefined
     }
   }
@@ -182,7 +182,10 @@ class InputPage extends Component {
               <Button
                 variant="primary"
                 type="submit"
-                disabled={this.state.submitting}
+                disabled={
+                  this.state.submitting ||
+                  this.state[PASTE_CONTENT_ID].length === 0
+                }
               >
                 Submit
               </Button>

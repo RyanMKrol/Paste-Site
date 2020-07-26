@@ -14,6 +14,8 @@ import { PasteJumbotron } from './../../Components'
 
 import './OutputPage.css'
 
+const PASTE_DECRYPTION_KEY_ID = 'decryptionKey'
+
 class OutputPage extends Component {
   constructor(props) {
     super()
@@ -21,7 +23,8 @@ class OutputPage extends Component {
     this.state = {
       uri: props.uri,
       title: undefined,
-      content: undefined
+      content: undefined,
+      [PASTE_DECRYPTION_KEY_ID]: ''
     }
 
     this.handleTextInputChange = this.handleTextInputChange.bind(this)
@@ -57,16 +60,20 @@ class OutputPage extends Component {
 
   // encrypts any content with a key
   handleDecrypt() {
-    const decryptionKey = this.state.decryptionKey
+    const decryptionKey = this.state[PASTE_DECRYPTION_KEY_ID]
     const decryptionContent = this.state.content
 
     const cryptr = new Cryptr(decryptionKey)
 
-    const decryptedContent = cryptr.decrypt(decryptionContent)
+    try {
+      const decryptedContent = cryptr.decrypt(decryptionContent)
 
-    this.setState({
-      content: decryptedContent
-    })
+      this.setState({
+        content: decryptedContent
+      })
+    } catch (error) {
+      window.alert('Failed to decrypt your paste!')
+    }
   }
 
   copyToClipboard() {
@@ -82,7 +89,7 @@ class OutputPage extends Component {
         </PasteJumbotron>
         <Container fluid="xl" className="outputPageContainer">
           <Col className="col">
-            <Form.Group controlId={'decryptionKey'}>
+            <Form.Group controlId={PASTE_DECRYPTION_KEY_ID}>
               <Form.Label>Decryption Key</Form.Label>
               <Form.Control type="text" onChange={this.handleTextInputChange} />
             </Form.Group>
@@ -90,6 +97,7 @@ class OutputPage extends Component {
               <Button
                 variant="primary"
                 className="outputPageButton"
+                disabled={this.state[PASTE_DECRYPTION_KEY_ID].length === 0}
                 onClick={this.handleDecrypt}
               >
                 Decrypt
