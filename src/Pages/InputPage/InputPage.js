@@ -8,7 +8,7 @@ import Form from 'react-bootstrap/Form'
 
 import Cryptr from 'cryptr'
 
-import customSetState from './../Utils'
+import customSetState from './../../Utils'
 
 import './InputPage.css'
 
