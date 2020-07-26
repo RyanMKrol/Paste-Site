@@ -7,6 +7,8 @@ import Jumbotron from 'react-bootstrap/Jumbotron'
 import Form from 'react-bootstrap/Form'
 
 import Cryptr from 'cryptr'
+import fetch from 'node-fetch'
+import { v4 as uuidv4 } from 'uuid'
 
 import customSetState from './../../Utils'
 
@@ -27,7 +29,10 @@ class InputPage extends Component {
 
     this.state = {
       [PASTE_TTL_ID]: 1,
-      submitting: false
+      submitting: false,
+      [PASTE_TITLE_ID]: undefined,
+      [PASTE_CONTENT_ID]: undefined,
+      [PASTE_ENCRYPTION_KEY_ID]: undefined
     }
   }
 
@@ -37,6 +42,27 @@ class InputPage extends Component {
 
     await this.toggleSubmitting()
 
+    await this.updateStateWithEncryption()
+
+    await this.createPaste()
+  }
+
+  async createPaste() {
+    const body = {
+      uri: uuidv4(),
+      title: this.state[PASTE_TITLE_ID],
+      content: this.state[PASTE_CONTENT_ID],
+      ttlDays: parseInt(this.state[PASTE_TTL_ID])
+    }
+
+    await fetch('/api/create', {
+      method: 'post',
+      body: JSON.stringify(body),
+      headers: { 'Content-Type': 'application/json' }
+    })
+  }
+
+  async updateStateWithEncryption() {
     const localState = Object.assign({}, this.state)
 
     if (localState[PASTE_ENCRYPTION_KEY_ID] !== undefined) {
