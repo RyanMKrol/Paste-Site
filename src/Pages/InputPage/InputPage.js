@@ -26,12 +26,16 @@ class InputPage extends Component {
     this.handleRadioChange = this.handleRadioChange.bind(this)
 
     this.state = {
-      [PASTE_TTL_ID]: 1
+      [PASTE_TTL_ID]: 1,
+      submitting: false
     }
   }
 
+  // handles submitting the form
   async handleSubmit(event) {
     event.preventDefault()
+
+    await this.toggleSubmitting()
 
     const localState = Object.assign({}, this.state)
 
@@ -47,18 +51,29 @@ class InputPage extends Component {
     await customSetState(this, localState)
   }
 
+  // handles change events of the text inputs
   handleTextInputChange(event) {
     this.setState({
       [event.target.id]: event.target.value
     })
   }
 
+  // handles change events of the radio buttons
   handleRadioChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     })
   }
 
+  // toggles the submitting state key
+  toggleSubmitting() {
+    const isSubmitting = this.state.submitting
+    const newState = { submitting: !isSubmitting }
+
+    return customSetState(this, newState)
+  }
+
+  // encrypts any content with a key
   encryptContent(content, encryptionKey) {
     const cryptr = new Cryptr(encryptionKey)
 
@@ -134,7 +149,11 @@ class InputPage extends Component {
                   id="pasteTimeToLive3"
                 />
               </Form.Group>
-              <Button variant="primary" type="submit">
+              <Button
+                variant="primary"
+                type="submit"
+                disabled={this.state.submitting}
+              >
                 Submit
               </Button>
             </Form>
