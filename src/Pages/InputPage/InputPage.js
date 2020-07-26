@@ -87,7 +87,7 @@ class InputPage extends Component {
           <h1>Save Your Pastes!</h1>
           <p>This is a basic site for saving text online to retrieve later.</p>
         </Jumbotron>
-        <Container fluid className="container">
+        <Container fluid className="input-page-container">
           <Col className="col">
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId={PASTE_TITLE_ID}>
