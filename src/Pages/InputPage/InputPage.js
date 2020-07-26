@@ -48,17 +48,21 @@ class InputPage extends Component {
   }
 
   async createPaste() {
+    const uri = uuidv4()
+
     const body = {
-      uri: uuidv4(),
+      uri: uri,
       title: this.state[PASTE_TITLE_ID],
       content: this.state[PASTE_CONTENT_ID],
       ttlDays: parseInt(this.state[PASTE_TTL_ID])
     }
 
-    await fetch('/api/create', {
+    fetch('/api/create', {
       method: 'post',
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' }
+    }).then(() => {
+      window.location.replace('/paste/' + uri)
     })
   }
 
