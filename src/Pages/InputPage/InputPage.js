@@ -118,7 +118,7 @@ class InputPage extends Component {
           <p>This is a basic site for saving text online to retrieve later.</p>
         </Jumbotron>
         <Container fluid className="input-page-container">
-          <Col className="col">
+          <Col>
             <Form onSubmit={this.handleSubmit}>
               <Form.Group controlId={PASTE_TITLE_ID}>
                 <Form.Label>Title</Form.Label>
