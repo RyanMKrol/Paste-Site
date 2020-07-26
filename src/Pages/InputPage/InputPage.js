@@ -24,6 +24,10 @@ class InputPage extends Component {
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleTextInputChange = this.handleTextInputChange.bind(this)
     this.handleRadioChange = this.handleRadioChange.bind(this)
+
+    this.state = {
+      PASTE_TTL_ID: 1
+    }
   }
 
   async handleSubmit(event) {
