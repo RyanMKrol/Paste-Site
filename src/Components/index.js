@@ -1,0 +1,1 @@
+export { PasteJumbotron } from './PasteJumbotron'
