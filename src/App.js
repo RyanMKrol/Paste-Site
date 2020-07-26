@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import './App.css'
 
 import Button from 'react-bootstrap/Button'
 import Col from 'react-bootstrap/Col'
@@ -7,12 +6,16 @@ import Container from 'react-bootstrap/Container'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 import Form from 'react-bootstrap/Form'
 
+import Cryptr from 'cryptr'
+
+import './App.css'
+
 class App extends Component {
   constructor() {
     super()
 
     this.handleSubmit = this.handleSubmit.bind(this)
-    this.handleTextAreaChange = this.handleTextAreaChange.bind(this)
+    this.handleTextInputChange = this.handleTextInputChange.bind(this)
     this.handleRadioChange = this.handleRadioChange.bind(this)
   }
 
@@ -20,15 +23,22 @@ class App extends Component {
     event.preventDefault()
   }
 
-  handleTextAreaChange(event) {
+  handleTextInputChange(event) {
     this.setState({
       [event.target.id]: event.target.value
     })
   }
+
   handleRadioChange(event) {
     this.setState({
       [event.target.name]: event.target.value
     })
+  }
+
+  encryptContent(content, encryptionKey) {
+    const cryptr = new Cryptr(encryptionKey)
+
+    return cryptr.encrypt(content)
   }
 
   render() {
@@ -46,9 +56,24 @@ class App extends Component {
                 <Form.Control
                   as="textarea"
                   rows="3"
-                  onChange={this.handleTextAreaChange}
+                  onChange={this.handleTextInputChange}
                 />
               </Form.Group>
+              <Form.Group controlId="encryptionKey">
+                <Form.Label>
+                  For private pastes, we can password protect your content!
+                </Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Encryption Key"
+                  onChange={this.handleTextInputChange}
+                />
+                <Form.Text className="text-muted">
+                  We'll never save your encryption key, or store the original
+                  content if a key is present
+                </Form.Text>
+              </Form.Group>
+
               <Form.Group
                 controlId="pasteTimeToLive"
                 onChange={this.handleRadioChange}
