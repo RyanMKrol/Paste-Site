@@ -1,0 +1,11 @@
+.output-page-container {
+  display: flex;
+  align-items: center;
+  height: 100%;
+  flex-flow: column;
+}
+
+.masterContainer {
+  height: 100%;
+  width: 100%;
+}
