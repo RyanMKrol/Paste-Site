@@ -12,6 +12,7 @@ import customSetState from './../../Utils'
 
 import './InputPage.css'
 
+const PASTE_TITLE_ID = 'pasteTitle'
 const PASTE_CONTENT_ID = 'pasteContent'
 const PASTE_ENCRYPTION_KEY_ID = 'encryptionKey'
 const PASTE_TTL_ID = 'pasteTimeToLive'
@@ -70,8 +71,16 @@ class InputPage extends Component {
         <Container fluid className="container">
           <Col className="col">
             <Form onSubmit={this.handleSubmit}>
+              <Form.Group controlId={PASTE_TITLE_ID}>
+                <Form.Label>Title</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Optional"
+                  onChange={this.handleTextInputChange}
+                />
+              </Form.Group>
               <Form.Group controlId={PASTE_CONTENT_ID}>
-                <Form.Label>What do you want to save?</Form.Label>
+                <Form.Label>Content</Form.Label>
                 <Form.Control
                   as="textarea"
                   rows="3"
@@ -84,7 +93,7 @@ class InputPage extends Component {
                 </Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Encryption Key"
+                  placeholder="Optional"
                   onChange={this.handleTextInputChange}
                 />
                 <Form.Text className="text-muted">
