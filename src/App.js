@@ -8,7 +8,13 @@ import Form from 'react-bootstrap/Form'
 
 import Cryptr from 'cryptr'
 
+import customSetState from './Utils'
+
 import './App.css'
+
+const PASTE_CONTENT_ID = 'pasteContent'
+const PASTE_ENCRYPTION_KEY_ID = 'encryptionKey'
+const PASTE_TTL_ID = 'pasteTimeToLive'
 
 class App extends Component {
   constructor() {
@@ -19,8 +25,21 @@ class App extends Component {
     this.handleRadioChange = this.handleRadioChange.bind(this)
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault()
+
+    const localState = Object.assign({}, this.state)
+
+    if (localState[PASTE_ENCRYPTION_KEY_ID] !== undefined) {
+      const encyrptedContent = this.encryptContent(
+        localState[PASTE_CONTENT_ID],
+        localState[PASTE_ENCRYPTION_KEY_ID]
+      )
+
+      localState[PASTE_CONTENT_ID] = encyrptedContent
+    }
+
+    await customSetState(this, localState)
   }
 
   handleTextInputChange(event) {
@@ -51,7 +70,7 @@ class App extends Component {
         <Container fluid className="container">
           <Col className="col">
             <Form onSubmit={this.handleSubmit}>
-              <Form.Group controlId="pasteContent">
+              <Form.Group controlId={PASTE_CONTENT_ID}>
                 <Form.Label>What do you want to save?</Form.Label>
                 <Form.Control
                   as="textarea"
@@ -59,7 +78,7 @@ class App extends Component {
                   onChange={this.handleTextInputChange}
                 />
               </Form.Group>
-              <Form.Group controlId="encryptionKey">
+              <Form.Group controlId={PASTE_ENCRYPTION_KEY_ID}>
                 <Form.Label>
                   For private pastes, we can password protect your content!
                 </Form.Label>
@@ -75,28 +94,28 @@ class App extends Component {
               </Form.Group>
 
               <Form.Group
-                controlId="pasteTimeToLive"
+                controlId={PASTE_TTL_ID}
                 onChange={this.handleRadioChange}
               >
                 <Form.Label>How long do you want us to save it for?</Form.Label>
                 <Form.Check
                   type="radio"
                   label="1 Day"
-                  name="pasteTimeToLive"
+                  name={PASTE_TTL_ID}
                   value={1}
                   id="pasteTimeToLive1"
                 />
                 <Form.Check
                   type="radio"
                   label="30 Days"
-                  name="pasteTimeToLive"
+                  name={PASTE_TTL_ID}
                   value={30}
                   id="pasteTimeToLive2"
                 />
                 <Form.Check
                   type="radio"
                   label="300 Days"
-                  name="pasteTimeToLive"
+                  name={PASTE_TTL_ID}
                   value={300}
                   id="pasteTimeToLive3"
                 />
