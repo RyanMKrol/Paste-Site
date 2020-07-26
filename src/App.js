@@ -6,12 +6,8 @@ export default function App() {
   return (
     <Router>
       <Switch>
-        <Route path="/paste">
-          <OutputPage />
-        </Route>
-        <Route path="/">
-          <InputPage />
-        </Route>
+        <Route path="/paste/:uri" component={OutputPage} />
+        <Route path="/" component={InputPage} />
       </Switch>
     </Router>
   )

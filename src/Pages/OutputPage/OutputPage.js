@@ -5,16 +5,38 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import Jumbotron from 'react-bootstrap/Jumbotron'
 
-import Cryptr from 'cryptr'
+import fetch from 'node-fetch'
 
 import './OutputPage.css'
 
 class OutputPage extends Component {
-  // encrypts any content with a key
-  encryptContent(content, encryptionKey) {
-    const cryptr = new Cryptr(encryptionKey)
+  constructor(props) {
+    super()
 
-    return cryptr.encrypt(content)
+    this.state = {
+      uri: props.uri,
+      title: undefined,
+      content: undefined
+    }
+  }
+
+  componentDidMount() {
+    const { uri } = this.props.match.params
+
+    fetch(`/api/get/${uri}`)
+      .then(res => res.json())
+      .then(data => {
+        this.setState({
+          title: data.title,
+          content: data.content
+        })
+      })
+  }
+
+  generateTitle() {
+    return this.state.title ? (
+      <Card.Header>{this.state.title}</Card.Header>
+    ) : null
   }
 
   render() {
@@ -27,12 +49,9 @@ class OutputPage extends Component {
         <Container fluid="xl" className="output-page-container">
           <Col className="col">
             <Card bg={'secondary'} text={'light'}>
-              <Card.Header>Header</Card.Header>
+              {this.generateTitle()}
               <Card.Body>
-                <Card.Text>
-                  Some quick example text to build on the card title and make up
-                  the bulk of the card's content.
-                </Card.Text>
+                <Card.Text>{this.state.content}</Card.Text>
               </Card.Body>
             </Card>
           </Col>
