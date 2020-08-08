@@ -11,10 +11,15 @@ import Cryptr from 'cryptr'
 import fetch from 'node-fetch'
 
 import { PasteJumbotron } from './../../Components'
+import { baseEndpoint } from './../../Utils'
 
 import './OutputPage.css'
 
 const PASTE_DECRYPTION_KEY_ID = 'decryptionKey'
+
+function replaceNewlines(content) {
+  return content.replace(/(?:\r\n|\r|\n)/g, '<br>')
+}
 
 class OutputPage extends Component {
   constructor(props) {
@@ -22,8 +27,8 @@ class OutputPage extends Component {
 
     this.state = {
       uri: props.uri,
-      title: undefined,
-      content: undefined,
+      title: '',
+      content: '',
       [PASTE_DECRYPTION_KEY_ID]: ''
     }
 
@@ -35,7 +40,7 @@ class OutputPage extends Component {
   componentDidMount() {
     const { uri } = this.props.match.params
 
-    fetch(`/api/get/${uri}`)
+    fetch(`${baseEndpoint()}/get/${uri}`)
       .then(res => res.json())
       .then(data => {
         this.setState({
@@ -113,7 +118,9 @@ class OutputPage extends Component {
             <Card bg={'secondary'} text={'light'}>
               {this.generateTitle()}
               <Card.Body>
-                <Card.Text>{this.state.content}</Card.Text>
+                <Card.Text className="outputPageContent">
+                  {this.state.content}
+                </Card.Text>
               </Card.Body>
             </Card>
           </Col>

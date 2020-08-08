@@ -1,8 +1,8 @@
 .outputPageContainer {
   display: flex;
   align-items: center;
-  height: 100%;
   flex-flow: column;
+  margin-bottom: 30px;
 }
 
 .masterContainer {
@@ -17,4 +17,8 @@
 
 .outputPageButton {
   margin: 4px;
+}
+
+.outputPageContent {
+  white-space: pre-wrap;
 }
