@@ -10,7 +10,7 @@ import fetch from 'node-fetch'
 import { v4 as uuidv4 } from 'uuid'
 
 import { PasteJumbotron } from './../../Components'
-import customSetState from './../../Utils'
+import { customSetState, baseEndpoint } from './../../Utils'
 
 import './InputPage.css'
 
@@ -57,7 +57,7 @@ class InputPage extends Component {
       ttlDays: parseInt(this.state[PASTE_TTL_ID])
     }
 
-    fetch('/api/create', {
+    fetch(`${baseEndpoint()}/create`, {
       method: 'post',
       body: JSON.stringify(body),
       headers: { 'Content-Type': 'application/json' }
